@@ -1,0 +1,86 @@
+/*! cornerstoneWebImageLoader - v0.1.0 - 2014-04-16 | (c) 2014 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */
+//
+// This is a cornerstone image loader for web images such as PNG and JPEG
+//
+
+(function ($, cornerstone) {
+
+    "use strict";
+
+    var canvas = document.createElement('canvas');
+
+    function extractStoredPixels(image)
+    {
+        canvas.height = image.naturalHeight;
+        canvas.width = image.naturalWidth;
+        var context = canvas.getContext('2d');
+        context.drawImage(image, 0, 0);
+        var imageData = context.getImageData(0, 0, image.naturalWidth, image.naturalHeight);
+        var imageDataData = imageData.data;
+        var numPixels = image.naturalHeight * image.naturalWidth;
+        var storedPixelData = new Uint8Array(numPixels * 3);
+        var imageDataIndex = 0;
+        var storedPixelDataIndex = 0;
+        for(var i=0; i < numPixels; i++) {
+            storedPixelData[storedPixelDataIndex++] = imageDataData[imageDataIndex++];
+            storedPixelData[storedPixelDataIndex++] = imageDataData[imageDataIndex++];
+            storedPixelData[storedPixelDataIndex++] = imageDataData[imageDataIndex++];
+            imageDataIndex++;
+        }
+        return storedPixelData;
+    }
+
+    function createImageObject(image, imageId)
+    {
+        // extract the attributes we need
+        var rows = image.naturalHeight;
+        var columns = image.naturalWidth;
+
+        // Extract the various attributes we need
+        var imageObject = {
+            imageId : imageId,
+            minPixelValue : 0, // calculated below
+            maxPixelValue : 255, // calculated below
+            slope: 1.0,
+            intercept: 0,
+            windowCenter : 127,
+            windowWidth : 256,
+            storedPixelData: extractStoredPixels(image),
+            rows: rows,
+            columns: columns,
+            height: rows,
+            width: columns,
+            color: true,
+            columnPixelSpacing: 1.0,
+            rowPixelSpacing: 1.0,
+            invert: false
+        };
+
+        return imageObject;
+    }
+
+    // Loads an image given a url to an image
+    function loadImage(imageId) {
+        // create a deferred object
+        var deferred = $.Deferred();
+
+        var image = new Image();
+        image.crossOrigin = 'anonymous';
+        image.onload = function() {
+            var imageObject = createImageObject(image, imageId);
+            deferred.resolve(imageObject);
+        };
+        image.onerror = function() {
+            deferred.reject();
+        };
+        image.src = imageId;
+
+        return deferred;
+    }
+
+    // steam the http and https prefixes so we can use standard web urls directly
+    cornerstone.registerImageLoader('http', loadImage);
+    cornerstone.registerImageLoader('https', loadImage);
+
+    return cornerstone;
+}($, cornerstone));
