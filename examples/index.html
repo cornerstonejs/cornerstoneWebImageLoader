@@ -88,12 +88,15 @@
 
             // image enable the dicomImage element and activate a few tools
             var element = $('#dicomImage').get(0);
-            cornerstone.enable(element, url);
-            cornerstoneTools.mouseInput.enable(element);
-            cornerstoneTools.mouseWheelInput.enable(element);
-            cornerstoneTools.wwwc.activate(element, 1); //
-            cornerstoneTools.pan.activate(element, 2); //
-            cornerstoneTools.zoom.activate(element, 4); //
+            cornerstone.enable(element);
+            cornerstone.loadImage(url).then(function(image) {
+                cornerstone.displayImage(element, image);
+                cornerstoneTools.mouseInput.enable(element);
+                cornerstoneTools.mouseWheelInput.enable(element);
+                cornerstoneTools.wwwc.activate(element, 1); //
+                cornerstoneTools.pan.activate(element, 2); //
+                cornerstoneTools.zoom.activate(element, 4); //
+            });
         });
     });
 

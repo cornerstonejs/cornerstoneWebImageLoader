@@ -1,4 +1,4 @@
-/*! cornerstoneWebImageLoader - v0.1.0 - 2014-04-16 | (c) 2014 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */
+/*! cornerstoneWebImageLoader - v0.1.0 - 2014-04-17 | (c) 2014 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */
 //
 // This is a cornerstone image loader for web images such as PNG and JPEG
 //
@@ -8,33 +8,62 @@
     "use strict";
 
     var canvas = document.createElement('canvas');
+    var lastImageIdDrawn = "";
 
-    function extractStoredPixels(image)
-    {
-        canvas.height = image.naturalHeight;
-        canvas.width = image.naturalWidth;
-        var context = canvas.getContext('2d');
-        context.drawImage(image, 0, 0);
-        var imageData = context.getImageData(0, 0, image.naturalWidth, image.naturalHeight);
-        var imageDataData = imageData.data;
-        var numPixels = image.naturalHeight * image.naturalWidth;
-        var storedPixelData = new Uint8Array(numPixels * 3);
-        var imageDataIndex = 0;
-        var storedPixelDataIndex = 0;
-        for(var i=0; i < numPixels; i++) {
-            storedPixelData[storedPixelDataIndex++] = imageDataData[imageDataIndex++];
-            storedPixelData[storedPixelDataIndex++] = imageDataData[imageDataIndex++];
-            storedPixelData[storedPixelDataIndex++] = imageDataData[imageDataIndex++];
-            imageDataIndex++;
-        }
-        return storedPixelData;
-    }
 
     function createImageObject(image, imageId)
     {
         // extract the attributes we need
         var rows = image.naturalHeight;
         var columns = image.naturalWidth;
+
+        function getPixelData()
+        {
+            var imageData = getImageData();
+            var imageDataData = imageData.data;
+            var numPixels = image.naturalHeight * image.naturalWidth;
+            var storedPixelData = new Uint8Array(numPixels * 4);
+            var imageDataIndex = 0;
+            var storedPixelDataIndex = 0;
+            for(var i=0; i < numPixels; i++) {
+                storedPixelData[storedPixelDataIndex++] = imageDataData[imageDataIndex++];
+                storedPixelData[storedPixelDataIndex++] = imageDataData[imageDataIndex++];
+                storedPixelData[storedPixelDataIndex++] = imageDataData[imageDataIndex++];
+                storedPixelData[storedPixelDataIndex++] = 255; // alpha
+                imageDataIndex++;
+            }
+            return storedPixelData;
+        }
+
+        function getImageData()
+        {
+            var context;
+            if(lastImageIdDrawn !== imageId) {
+                canvas.height = image.naturalHeight;
+                canvas.width = image.naturalWidth;
+                var context = canvas.getContext('2d');
+                context.drawImage(image, 0, 0);
+            }
+            else {
+                context = canvas.getContext('2d');
+            }
+            var imageData = context.getImageData(0, 0, image.naturalWidth, image.naturalHeight);
+            return imageData;
+        }
+
+        function getCanvas()
+        {
+            if(lastImageIdDrawn === imageId) {
+                return canvas;
+            }
+
+            canvas.height = image.naturalHeight;
+            canvas.width = image.naturalWidth;
+            var context = canvas.getContext('2d');
+            context.drawImage(image, 0, 0);
+            lastImageIdDrawn = imageId;
+            return canvas;
+        }
 
         // Extract the various attributes we need
         var imageObject = {
@@ -45,7 +74,10 @@
             intercept: 0,
             windowCenter : 127,
             windowWidth : 256,
-            storedPixelData: extractStoredPixels(image),
+            getPixelData: getPixelData,
+            getImageData: getImageData,
+            getCanvas: getCanvas,
+            //storedPixelData: extractStoredPixels(image),
             rows: rows,
             columns: columns,
             height: rows,
@@ -53,7 +85,8 @@
             color: true,
             columnPixelSpacing: 1.0,
             rowPixelSpacing: 1.0,
-            invert: false
+            invert: false,
+            sizeInBytes : rows * columns * 4 // we don't know for sure so we over estimate to be safe
         };
 
         return imageObject;
