@@ -1,4 +1,4 @@
-/*! cornerstoneWebImageLoader - v0.1.0 - 2014-04-17 | (c) 2014 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */
+/*! cornerstoneWebImageLoader - v0.2.0 - 2014-04-18 | (c) 2014 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */
 //
 // This is a cornerstone image loader for web images such as PNG and JPEG
 //
@@ -41,7 +41,7 @@
             if(lastImageIdDrawn !== imageId) {
                 canvas.height = image.naturalHeight;
                 canvas.width = image.naturalWidth;
-                var context = canvas.getContext('2d');
+                context = canvas.getContext('2d');
                 context.drawImage(image, 0, 0);
             }
             else {

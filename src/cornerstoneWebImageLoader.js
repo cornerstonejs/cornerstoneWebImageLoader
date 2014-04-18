@@ -40,7 +40,7 @@
             if(lastImageIdDrawn !== imageId) {
                 canvas.height = image.naturalHeight;
                 canvas.width = image.naturalWidth;
-                var context = canvas.getContext('2d');
+                context = canvas.getContext('2d');
                 context.drawImage(image, 0, 0);
             }
             else {
