@@ -64,6 +64,11 @@
             return canvas;
         }
 
+        function getImage()
+        {
+            return image;
+        }
+
         // Extract the various attributes we need
         var imageObject = {
             imageId : imageId,
@@ -76,6 +81,7 @@
             getPixelData: getPixelData,
             getImageData: getImageData,
             getCanvas: getCanvas,
+            getImage: getImage,
             //storedPixelData: extractStoredPixels(image),
             rows: rows,
             columns: columns,

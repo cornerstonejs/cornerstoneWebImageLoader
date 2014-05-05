@@ -1,4 +1,4 @@
-/*! cornerstoneWebImageLoader - v0.2.0 - 2014-04-18 | (c) 2014 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */
+/*! cornerstoneWebImageLoader - v0.2.0 - 2014-05-04 | (c) 2014 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */
 //
 // This is a cornerstone image loader for web images such as PNG and JPEG
 //
@@ -65,6 +65,11 @@
             return canvas;
         }
 
+        function getImage()
+        {
+            return image;
+        }
+
         // Extract the various attributes we need
         var imageObject = {
             imageId : imageId,
@@ -77,6 +82,7 @@
             getPixelData: getPixelData,
             getImageData: getImageData,
             getCanvas: getCanvas,
+            getImage: getImage,
             //storedPixelData: extractStoredPixels(image),
             rows: rows,
             columns: columns,
