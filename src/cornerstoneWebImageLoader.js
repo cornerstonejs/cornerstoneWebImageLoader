@@ -78,6 +78,7 @@
             intercept: 0,
             windowCenter : 127,
             windowWidth : 256,
+            render: cornerstone.renderColorImage,
             getPixelData: getPixelData,
             getImageData: getImageData,
             getCanvas: getCanvas,

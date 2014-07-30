@@ -3,6 +3,11 @@ cornerstone Web Image Loader
 
 A [cornerstone](https://github.com/chafey/cornerstone) Image Loader for web images (PNG, JPEG).
 
+View the [live examples](https://rawgithub.com/chafey/cornerstoneWebImageLoader/master/examples/index.html) to see this
+library in action!
+
+View the [simple image viewer](http://chafey.github.io/cornerstoneDemo/) built on cornerstone.
+
 
 Project Status
 ---------------
@@ -27,7 +32,7 @@ Usage
 Simple include the cornerstoneWebImageLoader.js in your HTML file after you load cornerstone.js and
 it will automatically register itself with cornerstone to load imageId's that have the http or https
 url schemes.  To display an image, pass the url to the image as the imageId parameter to a cornerstone
-API function like enable() or showImage()
+API function loadImage()
 
 Key Features
 ------------

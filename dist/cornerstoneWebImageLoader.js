@@ -1,4 +1,4 @@
-/*! cornerstoneWebImageLoader - v0.2.0 - 2014-05-04 | (c) 2014 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */
+/*! cornerstoneWebImageLoader - v0.3.0 - 2014-07-30 | (c) 2014 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */
 //
 // This is a cornerstone image loader for web images such as PNG and JPEG
 //
@@ -79,6 +79,7 @@
             intercept: 0,
             windowCenter : 127,
             windowWidth : 256,
+            render: cornerstone.renderColorImage,
             getPixelData: getPixelData,
             getImageData: getImageData,
             getCanvas: getCanvas,

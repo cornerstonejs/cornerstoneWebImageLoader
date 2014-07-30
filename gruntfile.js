@@ -16,8 +16,7 @@ module.exports = function(grunt) {
             bower: {
                 src: [
                     'bower_components/cornerstone/dist/cornerstone.min.css',
-                    'bower_components/cornerstone/dist/cornerstone.min.js',
-                    'bower_components/cornerstoneTools/dist/cornerstoneTools.min.js'
+                    'bower_components/cornerstone/dist/cornerstone.min.js'
                 ],
                 dest: 'examples',
                 expand: true,
