@@ -1,4 +1,4 @@
-/*! cornerstoneWebImageLoader - v0.3.1 - 2014-09-21 | (c) 2014 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */
+/*! cornerstoneWebImageLoader - v0.3.2 - 2014-11-11 | (c) 2014 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */
 //
 // This is a cornerstone image loader for web images such as PNG and JPEG
 //
