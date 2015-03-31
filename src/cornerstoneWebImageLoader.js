@@ -42,6 +42,7 @@
                 canvas.width = image.naturalWidth;
                 context = canvas.getContext('2d');
                 context.drawImage(image, 0, 0);
+                lastImageIdDrawn = imageId;
             }
             else {
                 context = canvas.getContext('2d');
