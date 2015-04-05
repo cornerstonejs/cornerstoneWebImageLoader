@@ -1,6 +1,6 @@
 {
     "name": "cornerstoneWebImageLoader",
-    "version": "0.4.1",
+    "version": "0.4.2",
     "description": "Cornerstone ImageLoader for Web Images (PNG, JPG)",
     "main" : "dist/cornerstoneWebImageLoader.js",
     "ignore": [
@@ -13,7 +13,7 @@
         ".gitignore"
     ],
     "dependencies": {
-        "cornerstone": "~0.7.2"
+        "cornerstone": "~0.7.3"
     },
     "devDependencies": {
         "qunit": "~1.14.0"
