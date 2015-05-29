@@ -3,7 +3,7 @@ cornerstone Web Image Loader
 
 A [cornerstone](https://github.com/chafey/cornerstone) Image Loader for web images (PNG, JPEG).
 
-View the [live examples](https://rawgithub.com/chafey/cornerstoneWebImageLoader/master/examples/index.html) to see this
+View the [live examples](http://chafey.github.io/cornerstoneWebImageLoader/) to see this
 library in action!
 
 View the [simple image viewer](http://chafey.github.io/cornerstoneDemo/) built on cornerstone.
@@ -16,7 +16,7 @@ Alpha but stable
 Live Examples
 ---------------
 
-[Click here for a live example of this library in use!](https://rawgithub.com/chafey/cornerstoneWebImageLoader/master/examples/index.html)
+[Click here for a live example of this library in use!](http://chafey.github.io/cornerstoneWebImageLoader/)
 
 Install
 -------
