@@ -7,18 +7,57 @@ module.exports = function(grunt) {
             default: {
                 src: [
                     'dist',
-                    'docs',
-                    'build'
+                    'build',
+                    '../cornerstoneWebImageLoaderBuild/*',
+                    '!../cornerstoneWebImageLoaderBuild/.git'
+
                 ]
             }
         },
         copy : {
-            bower: {
+            bowercss: {
                 src: [
-                    'bower_components/cornerstone/dist/cornerstone.min.css',
-                    'bower_components/cornerstone/dist/cornerstone.min.js'
+                    'bower_components/bootstrap/dist/css/bootstrap.min.css',
+                    'bower_components/cornerstone/dist/css/cornerstone.min.css',
                 ],
-                dest: 'examples',
+                dest: '../cornerstoneWebImageLoaderBuild/bower/css',
+                expand: true,
+                flatten: true
+            },
+            bowerjs: {
+                src: [
+                    'bower_components/jquery/dist/jquery.min.js',
+                    'bower_components/jquery/dist/jquery.min.map',
+                    'bower_components/bootstrap/dist/js/bootstrap.min.js',
+                    'bower_components/cornerstone/dist/cornerstone.min.js',
+                    'bower_components/cornerstoneTools/dist/cornerstoneTools.min.js',
+                    'bower_components/cornerstoneMath/dist/cornerstoneMath.min.js',
+                ],
+                dest: '../cornerstoneWebImageLoaderBuild/bower/js',
+                expand: true,
+                flatten: true
+            },
+            bowerfonts: {
+                src: [
+                    'bower_components/bootstrap/dist/fonts/*',
+                ],
+                dest: '../cornerstoneWebImageLoaderBuild/bower/fonts',
+                expand: true,
+                flatten: true
+            },
+            dist: {
+                src: [
+                    'dist/*'
+                ],
+                dest: '../cornerstoneWebImageLoaderBuild/',
+                expand: true,
+                flatten: true
+            },
+            html: {
+                src: [
+                    'examples/*',
+                ],
+                dest: '../cornerstoneWebImageLoaderBuild/',
                 expand: true,
                 flatten: true
             }
@@ -33,7 +72,7 @@ module.exports = function(grunt) {
                     stripBanners: true,
                     banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
                         '<%= grunt.template.today("yyyy-mm-dd") %> ' +
-                        '| (c) 2014 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */\n'
+                        '| (c) 2015 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */\n'
                 },
                 src : ['build/built.js'],
                 dest: 'dist/cornerstoneWebImageLoader.js'
@@ -48,7 +87,7 @@ module.exports = function(grunt) {
             options: {
                 banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
                     '<%= grunt.template.today("yyyy-mm-dd") %> ' +
-                    '| (c) 2014 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */\n'
+                    '| (c) 2015 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */\n'
             }
         },
         jshint: {
@@ -61,16 +100,16 @@ module.exports = function(grunt) {
         },
         watch: {
             scripts: {
-                files: ['src/*.js', 'test/*.js'],
-                tasks: ['concat:build', 'concat:dist', 'jshint']
+                files: ['src/*.js', 'test/*.js', 'examples/*'],
+                tasks: ['buildAll']
             }
         }
     });
 
     require('load-grunt-tasks')(grunt);
 
-    grunt.registerTask('buildAll', ['clean','concat:build', 'concat:dist', 'uglify', 'jshint']);
-    grunt.registerTask('default', ['buildAll']);
+    grunt.registerTask('buildAll',  ['concat', 'uglify', 'copy']);
+    grunt.registerTask('default', ['clean', 'buildAll']);
 };
 
 // Release process:
