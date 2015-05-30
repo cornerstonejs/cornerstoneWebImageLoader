@@ -39,6 +39,10 @@ Key Features
 
 * Provides a bridge between the cornerstone library and standard web images
 
+Contributors
+------------
+@onluiz for fixing a bug with images not being properly invalidated
+
 
 Build System
 ============
