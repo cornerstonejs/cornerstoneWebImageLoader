@@ -133,7 +133,7 @@ cornerstoneWebImageLoader = {};
           urlCreator.revokeObjectURL(imageUrl);
           deferred.reject();
         };
-      }
+      };
       xhr.send();
       return deferred;
     }

@@ -89,7 +89,7 @@ module.exports = function(grunt) {
 
     require('load-grunt-tasks')(grunt);
 
-    grunt.registerTask('buildAll',  ['concat', 'uglify', 'copy']);
+    grunt.registerTask('buildAll',  ['jshint', 'concat', 'uglify', 'copy']);
     grunt.registerTask('default', ['clean', 'buildAll']);
 };
 
