@@ -6,7 +6,6 @@
     <SCRIPT src="bower/js/cornerstone.min.js"></SCRIPT>
     <SCRIPT src="bower/js/cornerstoneMath.min.js"></SCRIPT>
     <SCRIPT src="bower/js/cornerstoneTools.min.js"></SCRIPT>
-    <SCRIPT src="cornerstoneTestImageLoader.js"></SCRIPT>
     <link href="bower/css/bootstrap.min.css" rel="stylesheet">
     <link href="bower/css/cornerstone.min.css" rel="stylesheet">
     <script src="cornerstoneWebImageLoader.js"></script>
@@ -41,7 +40,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-1" for="wadoURL">URL</label>
                 <div class="col-sm-8">
-                    <input class="form-control" type="text" id="wadoURL" placeholder="Enter URL" value="http://upload.wikimedia.org/wikipedia/commons/7/7d/Renal_Cell_Carcinoma.jpg">
+                    <input class="form-control" type="text" id="wadoURL" placeholder="Enter URL" value="http:Renal_Cell_Carcinoma.jpg">
                 </div>
                 <div class="col-sm-3">
                     <button class="form-control" type="button" id="downloadAndView" class="btn btn-primary">Download and View</button>
@@ -68,6 +67,13 @@
 <script>
 
     $(document).ready(function() {
+
+        cornerstoneWebImageLoader.configure({
+           beforeSend: function(xhr) {
+               // Add custom headers here (e.g. auth tokens)
+               xhr.setRequestHeader('x-auth-token', 'my auth token');
+           }
+        });
 
         $('#downloadAndView').click(function(e) {
 

@@ -18,7 +18,7 @@ module.exports = function(grunt) {
             bowercss: {
                 src: [
                     'bower_components/bootstrap/dist/css/bootstrap.min.css',
-                    'bower_components/cornerstone/dist/css/cornerstone.min.css',
+                    'bower_components/cornerstone/dist/cornerstone.min.css',
                 ],
                 dest: '../cornerstoneWebImageLoaderBuild/bower/css',
                 expand: true,
@@ -64,7 +64,7 @@ module.exports = function(grunt) {
         },
         concat: {
             build: {
-                src : ['src/cornerstoneWebImageLoader.js', 'src/*.js'],
+                src : ['src/header.js', 'src/*.js'],
                 dest: 'build/built.js'
             },
             dist: {

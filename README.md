@@ -11,7 +11,7 @@ View the [simple image viewer](http://chafey.github.io/cornerstoneDemo/) built o
 
 Project Status
 ---------------
-Alpha but stable
+Alpha
 
 Live Examples
 ---------------
@@ -29,20 +29,21 @@ Get a packaged source file:
 Usage
 -------
 
-Simple include the cornerstoneWebImageLoader.js in your HTML file after you load cornerstone.js and
+Simply include the cornerstoneWebImageLoader.js in your HTML file after you load cornerstone.js and
 it will automatically register itself with cornerstone to load imageId's that have the http or https
 url schemes.  To display an image, pass the url to the image as the imageId parameter to a cornerstone
-API function loadImage()
+API function loadImage().
 
 Key Features
 ------------
 
 * Provides a bridge between the cornerstone library and standard web images
+* Allows XHR to be hooked so custom http headers can be added (e.g. for authentication).  See the example
+  to see how this is done.
 
 Contributors
 ------------
 @onluiz for fixing a bug with images not being properly invalidated
-
 
 Build System
 ============
@@ -78,9 +79,6 @@ Automatically running the build and unit tests after each source change:
 
 Backlog
 ------------
-
-* Consider alternatives to jQuery for deffered (when.js?)
-* Add error handling
 
 
 Why is this a separate library from cornerstone?

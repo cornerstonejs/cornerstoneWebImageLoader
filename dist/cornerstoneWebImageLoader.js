@@ -1,15 +1,21 @@
-/*! cornerstoneWebImageLoader - v0.4.3 - 2015-05-29 | (c) 2015 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */
+/*! cornerstoneWebImageLoader - v0.5.0 - 2015-07-27 | (c) 2015 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */
+cornerstoneWebImageLoader = {};
 //
 // This is a cornerstone image loader for web images such as PNG and JPEG
 //
 
-(function ($, cornerstone) {
+(function ($, cornerstone, cornerstoneWebImageLoader) {
 
     "use strict";
 
     var canvas = document.createElement('canvas');
     var lastImageIdDrawn = "";
 
+
+    var options = {
+      // callback allowing customization of the xhr (e.g. adding custom auth headers, cors, etc)
+      beforeSend : function(xhr) {}
+    };
 
     function createImageObject(image, imageId)
     {
@@ -102,26 +108,43 @@
 
     // Loads an image given a url to an image
     function loadImage(imageId) {
-        // create a deferred object
-        var deferred = $.Deferred();
 
-        var image = new Image();
-        image.crossOrigin = 'anonymous';
+      // create a deferred object
+      var deferred = $.Deferred();
+
+      var image = new Image();
+
+      var xhr = new XMLHttpRequest();
+      xhr.responseType = "arraybuffer";
+      xhr.open("GET", imageId, true);
+      options.beforeSend(xhr);
+      xhr.onload = function(e) {
+        var arrayBufferView = new Uint8Array(this.response);
+        var blob = new Blob([arrayBufferView], {type: "image/jpeg"});
+        var urlCreator = window.URL || window.webkitURL;
+        var imageUrl = urlCreator.createObjectURL(blob);
+        image.src = imageUrl;
         image.onload = function() {
-            var imageObject = createImageObject(image, imageId);
-            deferred.resolve(imageObject);
+          var imageObject = createImageObject(image, imageId);
+          deferred.resolve(imageObject);
+          urlCreator.revokeObjectURL(imageUrl);
         };
         image.onerror = function() {
-            deferred.reject();
+          urlCreator.revokeObjectURL(imageUrl);
+          deferred.reject();
         };
-        image.src = imageId;
+      }
+      xhr.send();
+      return deferred;
+    }
 
-        return deferred;
+    function configure(opts) {
+      options = opts;
     }
 
     // steam the http and https prefixes so we can use standard web urls directly
     cornerstone.registerImageLoader('http', loadImage);
     cornerstone.registerImageLoader('https', loadImage);
-
+    cornerstoneWebImageLoader.configure = configure;
     return cornerstone;
-}($, cornerstone));
+}($, cornerstone, cornerstoneWebImageLoader));

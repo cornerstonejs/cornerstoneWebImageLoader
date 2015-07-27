@@ -1,6 +1,6 @@
 {
     "name": "cornerstoneWebImageLoader",
-    "version": "0.4.3",
+    "version": "0.5.0",
     "description": "Cornerstone ImageLoader for Web Images (PNG, JPG)",
     "main" : "dist/cornerstoneWebImageLoader.js",
     "ignore": [
