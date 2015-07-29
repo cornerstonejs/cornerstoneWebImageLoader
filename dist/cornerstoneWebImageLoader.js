@@ -1,4 +1,4 @@
-/*! cornerstoneWebImageLoader - v0.5.0 - 2015-07-27 | (c) 2015 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */
+/*! cornerstoneWebImageLoader - v0.5.1 - 2015-07-29 | (c) 2015 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */
 cornerstoneWebImageLoader = {};
 //
 // This is a cornerstone image loader for web images such as PNG and JPEG
@@ -134,6 +134,23 @@ cornerstoneWebImageLoader = {};
           deferred.reject();
         };
       }
+      xhr.onprogress = function(oProgress) {
+
+        if (oProgress.lengthComputable) {  //evt.loaded the bytes browser receive
+            //evt.total the total bytes seted by the header
+            //
+            var loaded = oProgress.loaded;
+            var total = oProgress.total;
+            var percentComplete = Math.round((loaded / total)*100);
+
+            $(cornerstone).trigger('CornerstoneImageLoadProgress', {
+                imageId: imageId,
+                loaded: loaded,
+                total: total,
+                percentComplete: percentComplete
+            });
+        }
+      };   
       xhr.send();
       return deferred;
     }

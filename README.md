@@ -11,7 +11,7 @@ View the [simple image viewer](http://chafey.github.io/cornerstoneDemo/) built o
 
 Project Status
 ---------------
-Alpha
+Beta
 
 Live Examples
 ---------------
@@ -38,12 +38,13 @@ Key Features
 ------------
 
 * Provides a bridge between the cornerstone library and standard web images
-* Allows XHR to be hooked so custom http headers can be added (e.g. for authentication).  See the example
-  to see how this is done.
+* Allows XHR to be hooked so custom http headers can be added (e.g. for authentication).  View the source of the
+  [example](http://chafey.github.io/cornerstoneWebImageLoader) to see how this is done.
 
 Contributors
 ------------
 @onluiz for fixing a bug with images not being properly invalidated
+@leonardorame for adding support for CornerstoneImageLoadProgress
 
 Build System
 ============
