@@ -1,6 +1,6 @@
 {
     "name": "cornerstoneWebImageLoader",
-    "version": "0.5.1",
+    "version": "0.5.2",
     "description": "Cornerstone ImageLoader for Web Images (PNG, JPG)",
     "main" : "dist/cornerstoneWebImageLoader.js",
     "ignore": [
@@ -13,12 +13,12 @@
         ".gitignore"
     ],
     "dependencies": {
-        "cornerstone": "~0.7.3"
+        "cornerstone": "~0.8.1"
     },
     "devDependencies": {
         "qunit": "~1.14.0",
         "bootstrap": "~3.3.4",
-        "cornerstoneTools": "~0.6.2"
+        "cornerstoneTools": "~0.7.0"
     },
     "license": "MIT",
     "authors" : ["Chris Hafey"],
