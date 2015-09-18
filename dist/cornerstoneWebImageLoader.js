@@ -1,4 +1,4 @@
-/*! cornerstoneWebImageLoader - v0.5.2 - 2015-09-06 | (c) 2015 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */
+/*! cornerstoneWebImageLoader - v0.5.3 - 2015-09-18 | (c) 2015 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */
 cornerstoneWebImageLoader = {};
 //
 // This is a cornerstone image loader for web images such as PNG and JPEG
@@ -115,8 +115,8 @@ cornerstoneWebImageLoader = {};
       var image = new Image();
 
       var xhr = new XMLHttpRequest();
-      xhr.responseType = "arraybuffer";
       xhr.open("GET", imageId, true);
+      xhr.responseType = "arraybuffer";
       options.beforeSend(xhr);
       xhr.onload = function(e) {
         var arrayBufferView = new Uint8Array(this.response);
