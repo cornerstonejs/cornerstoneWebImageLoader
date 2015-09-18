@@ -113,8 +113,8 @@
       var image = new Image();
 
       var xhr = new XMLHttpRequest();
-      xhr.responseType = "arraybuffer";
       xhr.open("GET", imageId, true);
+      xhr.responseType = "arraybuffer";
       options.beforeSend(xhr);
       xhr.onload = function(e) {
         var arrayBufferView = new Uint8Array(this.response);
