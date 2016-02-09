@@ -52,8 +52,7 @@
             else {
                 context = canvas.getContext('2d');
             }
-            var imageData = context.getImageData(0, 0, image.naturalWidth, image.naturalHeight);
-            return imageData;
+            return context.getImageData(0, 0, image.naturalWidth, image.naturalHeight);
         }
 
         function getCanvas()
@@ -76,14 +75,14 @@
         }
 
         // Extract the various attributes we need
-        var imageObject = {
+        return {
             imageId : imageId,
             minPixelValue : 0, // calculated below
             maxPixelValue : 255, // calculated below
             slope: 1.0,
             intercept: 0,
-            windowCenter : 127,
-            windowWidth : 256,
+            windowCenter : 128,
+            windowWidth : 255,
             render: cornerstone.renderColorImage,
             getPixelData: getPixelData,
             getImageData: getImageData,
@@ -95,13 +94,11 @@
             height: rows,
             width: columns,
             color: true,
-            columnPixelSpacing: 1.0,
-            rowPixelSpacing: 1.0,
+            columnPixelSpacing: undefined,
+            rowPixelSpacing: undefined,
             invert: false,
             sizeInBytes : rows * columns * 4 // we don't know for sure so we over estimate to be safe
         };
-
-        return imageObject;
     }
 
     // Loads an image given a url to an image
@@ -116,7 +113,7 @@
       xhr.open("GET", imageId, true);
       xhr.responseType = "arraybuffer";
       options.beforeSend(xhr);
-      xhr.onload = function(e) {
+      xhr.onload = function() {
         var arrayBufferView = new Uint8Array(this.response);
         var blob = new Blob([arrayBufferView], {type: "image/jpeg"});
         var urlCreator = window.URL || window.webkitURL;
@@ -131,7 +128,7 @@
           urlCreator.revokeObjectURL(imageUrl);
           deferred.reject();
         };
-      }
+      };
       xhr.onprogress = function(oProgress) {
 
         if (oProgress.lengthComputable) {  //evt.loaded the bytes browser receive
@@ -150,7 +147,7 @@
         }
       };   
       xhr.send();
-      return deferred;
+      return deferred.promise();
     }
 
     function configure(opts) {

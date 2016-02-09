@@ -7,10 +7,7 @@ module.exports = function(grunt) {
             default: {
                 src: [
                     'dist',
-                    'build',
-                    '../cornerstoneWebImageLoaderBuild/*',
-                    '!../cornerstoneWebImageLoaderBuild/.git'
-
+                    'build'
                 ]
             }
         },
@@ -18,9 +15,9 @@ module.exports = function(grunt) {
             bowercss: {
                 src: [
                     'bower_components/bootstrap/dist/css/bootstrap.min.css',
-                    'bower_components/cornerstone/dist/cornerstone.min.css',
+                    'bower_components/cornerstone/dist/cornerstone.min.css'
                 ],
-                dest: '../cornerstoneWebImageLoaderBuild/bower/css',
+                dest: 'examples',
                 expand: true,
                 flatten: true
             },
@@ -31,33 +28,9 @@ module.exports = function(grunt) {
                     'bower_components/bootstrap/dist/js/bootstrap.min.js',
                     'bower_components/cornerstone/dist/cornerstone.min.js',
                     'bower_components/cornerstoneTools/dist/cornerstoneTools.min.js',
-                    'bower_components/cornerstoneMath/dist/cornerstoneMath.min.js',
+                    'bower_components/cornerstoneMath/dist/cornerstoneMath.min.js'
                 ],
-                dest: '../cornerstoneWebImageLoaderBuild/bower/js',
-                expand: true,
-                flatten: true
-            },
-            bowerfonts: {
-                src: [
-                    'bower_components/bootstrap/dist/fonts/*',
-                ],
-                dest: '../cornerstoneWebImageLoaderBuild/bower/fonts',
-                expand: true,
-                flatten: true
-            },
-            dist: {
-                src: [
-                    'dist/*'
-                ],
-                dest: '../cornerstoneWebImageLoaderBuild/',
-                expand: true,
-                flatten: true
-            },
-            html: {
-                src: [
-                    'examples/*',
-                ],
-                dest: '../cornerstoneWebImageLoaderBuild/',
+                dest: 'examples',
                 expand: true,
                 flatten: true
             }

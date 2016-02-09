@@ -1,4 +1,4 @@
-/*! cornerstoneWebImageLoader - v0.5.3 - 2015-09-18 | (c) 2015 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */
+/*! cornerstoneWebImageLoader - v0.6.0 - 2016-02-09 | (c) 2015 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */
 cornerstoneWebImageLoader = {};
 //
 // This is a cornerstone image loader for web images such as PNG and JPEG
@@ -54,8 +54,7 @@ cornerstoneWebImageLoader = {};
             else {
                 context = canvas.getContext('2d');
             }
-            var imageData = context.getImageData(0, 0, image.naturalWidth, image.naturalHeight);
-            return imageData;
+            return context.getImageData(0, 0, image.naturalWidth, image.naturalHeight);
         }
 
         function getCanvas()
@@ -78,14 +77,14 @@ cornerstoneWebImageLoader = {};
         }
 
         // Extract the various attributes we need
-        var imageObject = {
+        return {
             imageId : imageId,
             minPixelValue : 0, // calculated below
             maxPixelValue : 255, // calculated below
             slope: 1.0,
             intercept: 0,
-            windowCenter : 127,
-            windowWidth : 256,
+            windowCenter : 128,
+            windowWidth : 255,
             render: cornerstone.renderColorImage,
             getPixelData: getPixelData,
             getImageData: getImageData,
@@ -97,13 +96,11 @@ cornerstoneWebImageLoader = {};
             height: rows,
             width: columns,
             color: true,
-            columnPixelSpacing: 1.0,
-            rowPixelSpacing: 1.0,
+            columnPixelSpacing: undefined,
+            rowPixelSpacing: undefined,
             invert: false,
             sizeInBytes : rows * columns * 4 // we don't know for sure so we over estimate to be safe
         };
-
-        return imageObject;
     }
 
     // Loads an image given a url to an image
@@ -118,7 +115,7 @@ cornerstoneWebImageLoader = {};
       xhr.open("GET", imageId, true);
       xhr.responseType = "arraybuffer";
       options.beforeSend(xhr);
-      xhr.onload = function(e) {
+      xhr.onload = function() {
         var arrayBufferView = new Uint8Array(this.response);
         var blob = new Blob([arrayBufferView], {type: "image/jpeg"});
         var urlCreator = window.URL || window.webkitURL;
@@ -133,7 +130,7 @@ cornerstoneWebImageLoader = {};
           urlCreator.revokeObjectURL(imageUrl);
           deferred.reject();
         };
-      }
+      };
       xhr.onprogress = function(oProgress) {
 
         if (oProgress.lengthComputable) {  //evt.loaded the bytes browser receive
@@ -152,7 +149,7 @@ cornerstoneWebImageLoader = {};
         }
       };   
       xhr.send();
-      return deferred;
+      return deferred.promise();
     }
 
     function configure(opts) {
