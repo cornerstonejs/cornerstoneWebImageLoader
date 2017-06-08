@@ -1,66 +1,59 @@
+import * as cornerstone from 'cornerstone-core';
+import arrayBufferToImage from './arrayBufferToImage';
+import createImage from './createImage';
+
 //
 // This is a cornerstone image loader for web images such as PNG and JPEG
 //
+let options = {
+  // callback allowing customization of the xhr (e.g. adding custom auth headers, cors, etc)
+  beforeSend (/* xhr */) {}
+};
 
-(function ($, cornerstone, cornerstoneWebImageLoader) {
 
-    "use strict";
+// Loads an image given a url to an image
+export function loadImage (imageId) {
+  const deferred = $.Deferred();
 
-  var options = {
-    // callback allowing customization of the xhr (e.g. adding custom auth headers, cors, etc)
-    beforeSend : function(xhr) {}
+  const xhr = new XMLHttpRequest();
+
+  xhr.open('GET', imageId, true);
+  xhr.responseType = 'arraybuffer';
+  options.beforeSend(xhr);
+
+  xhr.onload = function () {
+    const imagePromise = arrayBufferToImage(this.response);
+
+    imagePromise.then(function (image) {
+      const imageObject = createImage(image, imageId);
+
+      deferred.resolve(imageObject);
+    }, function (error) {
+      deferred.reject(error);
+    });
   };
+  xhr.onprogress = function (oProgress) {
 
+    if (oProgress.lengthComputable) {  // evt.loaded the bytes browser receive
+        // evt.total the total bytes seted by the header
+        //
+      const loaded = oProgress.loaded;
+      const total = oProgress.total;
+      const percentComplete = Math.round((loaded / total) * 100);
 
-  // Loads an image given a url to an image
-    function loadImage(imageId) {
-
-      // create a deferred object
-      var deferred = $.Deferred();
-
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", imageId, true);
-      xhr.responseType = "arraybuffer";
-      options.beforeSend(xhr);
-      xhr.onload = function() {
-        var imagePromise =  cornerstoneWebImageLoader.arrayBufferToImage(this.response);
-        imagePromise.then(function(image) {
-          var imageObject = cornerstoneWebImageLoader.createImage(image, imageId);
-          deferred.resolve(imageObject);
-        }, function(error) {
-          deferred.reject(error);
-        });
-      };
-      xhr.onprogress = function(oProgress) {
-
-        if (oProgress.lengthComputable) {  //evt.loaded the bytes browser receive
-            //evt.total the total bytes seted by the header
-            //
-            var loaded = oProgress.loaded;
-            var total = oProgress.total;
-            var percentComplete = Math.round((loaded / total)*100);
-
-            $(cornerstone).trigger('CornerstoneImageLoadProgress', {
-                imageId: imageId,
-                loaded: loaded,
-                total: total,
-                percentComplete: percentComplete
-            });
-        }
-      };   
-      xhr.send();
-      return deferred.promise();
+      $(cornerstone.events).trigger('CornerstoneImageLoadProgress', {
+        imageId,
+        loaded,
+        total,
+        percentComplete
+      });
     }
+  };
+  xhr.send();
 
-    function configure(opts) {
-      options = opts;
-    }
+  return deferred.promise();
+}
 
-    // steam the http and https prefixes so we can use standard web urls directly
-    cornerstone.registerImageLoader('http', loadImage);
-    cornerstone.registerImageLoader('https', loadImage);
-  
-    cornerstoneWebImageLoader.configure = configure;
-  
-    return cornerstoneWebImageLoader;
-}($, cornerstone, cornerstoneWebImageLoader));
+export function configure (opts) {
+  options = opts;
+}
