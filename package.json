@@ -1,6 +1,6 @@
 {
-  "name": "cornerstoneWebImageLoader",
-  "version": "0.8.0",
+  "name": "cornerstone-web-image-loader",
+  "version": "0.8.1",
   "description": "Cornerstone ImageLoader for Web Images (PNG, JPG)",
   "keywords": ["medical", "imaging", "JPEG", "PNG", "cornerstone"],
   "author": "Chris Hafey",
