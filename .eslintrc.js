@@ -11,13 +11,7 @@ module.exports = {
   'parserOptions': {
     'sourceType': 'module'
   },
-  'globals': {
-    'jpeg': true,
-    'JpegImage': true,
-    'JpxImage': true,
-    'CharLS': true,
-    'OpenJPEG': true
-  },
+  'globals': {},
   'rules': {
     'accessor-pairs': 'warn',
     'array-bracket-spacing': 'warn',

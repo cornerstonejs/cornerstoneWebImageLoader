@@ -51,7 +51,7 @@ export function loadImage (imageId) {
   };
   xhr.send();
 
-  return deferred.promise();
+  return deferred;
 }
 
 export function configure (opts) {
