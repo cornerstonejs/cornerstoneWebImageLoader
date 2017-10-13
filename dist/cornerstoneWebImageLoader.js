@@ -1,4 +1,4 @@
-/*! cornerstone-web-image-loader - 0.8.2 - 2017-06-24 | (c) 2016 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */
+/*! cornerstone-web-image-loader - 0.8.4 - 2017-10-13 | (c) 2016 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("cornerstone-core"));
@@ -95,26 +95,24 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 exports.default = function (arrayBuffer) {
-  var deferred = $.Deferred();
+  return new Promise(function (resolve, reject) {
+    var image = new Image();
+    var arrayBufferView = new Uint8Array(arrayBuffer);
+    var blob = new Blob([arrayBufferView]);
+    var urlCreator = window.URL || window.webkitURL;
+    var imageUrl = urlCreator.createObjectURL(blob);
 
-  var image = new Image();
+    image.src = imageUrl;
+    image.onload = function () {
+      resolve(image);
+      urlCreator.revokeObjectURL(imageUrl);
+    };
 
-  var arrayBufferView = new Uint8Array(arrayBuffer);
-  var blob = new Blob([arrayBufferView]);
-  var urlCreator = window.URL || window.webkitURL;
-  var imageUrl = urlCreator.createObjectURL(blob);
-
-  image.src = imageUrl;
-  image.onload = function () {
-    deferred.resolve(image);
-    urlCreator.revokeObjectURL(imageUrl);
-  };
-  image.onerror = function (err) {
-    urlCreator.revokeObjectURL(imageUrl);
-    deferred.reject(err);
-  };
-
-  return deferred.promise();
+    image.onerror = function (error) {
+      urlCreator.revokeObjectURL(imageUrl);
+      reject(error);
+    };
+  });
 };
 
 /***/ }),
@@ -183,15 +181,11 @@ exports.default = function (image, imageId) {
     return canvas;
   }
 
-  function getImage() {
-    return image;
-  }
-
   // Extract the various attributes we need
   return {
     imageId: imageId,
-    minPixelValue: 0, // calculated below
-    maxPixelValue: 255, // calculated below
+    minPixelValue: 0,
+    maxPixelValue: 255,
     slope: 1.0,
     intercept: 0,
     windowCenter: 128,
@@ -200,8 +194,9 @@ exports.default = function (image, imageId) {
     getPixelData: getPixelData,
     getImageData: getImageData,
     getCanvas: getCanvas,
-    getImage: getImage,
-    // storedPixelData: extractStoredPixels(image),
+    getImage: function getImage() {
+      return image;
+    },
     rows: rows,
     columns: columns,
     height: rows,

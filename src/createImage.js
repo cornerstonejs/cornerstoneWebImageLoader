@@ -65,15 +65,11 @@ export default function (image, imageId) {
     return canvas;
   }
 
-  function getImage () {
-    return image;
-  }
-
   // Extract the various attributes we need
   return {
     imageId,
-    minPixelValue: 0, // calculated below
-    maxPixelValue: 255, // calculated below
+    minPixelValue: 0,
+    maxPixelValue: 255,
     slope: 1.0,
     intercept: 0,
     windowCenter: 128,
@@ -82,8 +78,7 @@ export default function (image, imageId) {
     getPixelData,
     getImageData,
     getCanvas,
-    getImage,
-    // storedPixelData: extractStoredPixels(image),
+    getImage: () => image,
     rows,
     columns,
     height: rows,

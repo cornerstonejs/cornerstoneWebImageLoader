@@ -6,24 +6,22 @@
  * @returns {Promise} Promise that resolves to an Image object
  */
 export default function (arrayBuffer) {
-  const deferred = $.Deferred();
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    const arrayBufferView = new Uint8Array(arrayBuffer);
+    const blob = new Blob([arrayBufferView]);
+    const urlCreator = window.URL || window.webkitURL;
+    const imageUrl = urlCreator.createObjectURL(blob);
 
-  const image = new Image();
+    image.src = imageUrl;
+    image.onload = () => {
+      resolve(image);
+      urlCreator.revokeObjectURL(imageUrl);
+    };
 
-  const arrayBufferView = new Uint8Array(arrayBuffer);
-  const blob = new Blob([arrayBufferView]);
-  const urlCreator = window.URL || window.webkitURL;
-  const imageUrl = urlCreator.createObjectURL(blob);
-
-  image.src = imageUrl;
-  image.onload = function () {
-    deferred.resolve(image);
-    urlCreator.revokeObjectURL(imageUrl);
-  };
-  image.onerror = function (err) {
-    urlCreator.revokeObjectURL(imageUrl);
-    deferred.reject(err);
-  };
-
-  return deferred.promise();
+    image.onerror = (error) => {
+      urlCreator.revokeObjectURL(imageUrl);
+      reject(error);
+    };
+  });
 }
