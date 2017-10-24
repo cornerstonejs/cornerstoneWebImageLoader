@@ -1,4 +1,4 @@
-import * as cornerstone from 'cornerstone-core';
+import { $, external } from './externalModules.js';
 import arrayBufferToImage from './arrayBufferToImage';
 import createImage from './createImage';
 
@@ -34,14 +34,14 @@ export function loadImage (imageId) {
   };
   xhr.onprogress = function (oProgress) {
 
-    if (oProgress.lengthComputable) {  // evt.loaded the bytes browser receive
-        // evt.total the total bytes seted by the header
-        //
+    if (oProgress.lengthComputable) { // evt.loaded the bytes browser receive
+      // evt.total the total bytes seted by the header
+      //
       const loaded = oProgress.loaded;
       const total = oProgress.total;
       const percentComplete = Math.round((loaded / total) * 100);
 
-      $(cornerstone.events).trigger('CornerstoneImageLoadProgress', {
+      $(external.cornerstone.events).trigger('CornerstoneImageLoadProgress', {
         imageId,
         loaded,
         total,

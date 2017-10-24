@@ -1,14 +1,14 @@
-/*! cornerstone-web-image-loader - 0.8.4 - 2017-10-13 | (c) 2016 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */
+/*! cornerstone-web-image-loader - 0.8.4 - 2017-10-24 | (c) 2016 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("cornerstone-core"));
+		module.exports = factory(require("jquery"));
 	else if(typeof define === 'function' && define.amd)
-		define("cornerstoneWebImageLoader", ["cornerstone-core"], factory);
+		define("cornerstoneWebImageLoader", ["jquery"], factory);
 	else if(typeof exports === 'object')
-		exports["cornerstoneWebImageLoader"] = factory(require("cornerstone-core"));
+		exports["cornerstoneWebImageLoader"] = factory(require("jquery"));
 	else
-		root["cornerstoneWebImageLoader"] = factory(root["cornerstone"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_0__) {
+		root["cornerstoneWebImageLoader"] = factory(root["$"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_5__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -44,9 +44,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
 /******/
-/******/ 	// identity function for calling harmony imports with the correct context
-/******/ 	__webpack_require__.i = function(value) { return value; };
-/******/
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
@@ -79,9 +76,41 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.external = exports.$ = undefined;
+
+var _jquery = __webpack_require__(5);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _registerLoaders = __webpack_require__(6);
+
+var _registerLoaders2 = _interopRequireDefault(_registerLoaders);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var cornerstone = void 0;
+
+var external = {
+  set cornerstone(cs) {
+    cornerstone = cs;
+
+    (0, _registerLoaders2.default)(cornerstone);
+  },
+  get cornerstone() {
+    return cornerstone;
+  }
+};
+
+exports.$ = _jquery2.default;
+exports.external = external;
 
 /***/ }),
 /* 1 */
@@ -190,7 +219,7 @@ exports.default = function (image, imageId) {
     intercept: 0,
     windowCenter: 128,
     windowWidth: 255,
-    render: cornerstone.renderWebImage,
+    render: _externalModules.external.cornerstone.renderWebImage,
     getPixelData: getPixelData,
     getImageData: getImageData,
     getCanvas: getCanvas,
@@ -209,11 +238,7 @@ exports.default = function (image, imageId) {
   };
 };
 
-var _cornerstoneCore = __webpack_require__(0);
-
-var cornerstone = _interopRequireWildcard(_cornerstoneCore);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+var _externalModules = __webpack_require__(0);
 
 var canvas = document.createElement('canvas');
 var lastImageIdDrawn = '';
@@ -239,9 +264,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.loadImage = loadImage;
 exports.configure = configure;
 
-var _cornerstoneCore = __webpack_require__(0);
-
-var cornerstone = _interopRequireWildcard(_cornerstoneCore);
+var _externalModules = __webpack_require__(0);
 
 var _arrayBufferToImage = __webpack_require__(1);
 
@@ -253,8 +276,6 @@ var _createImage2 = _interopRequireDefault(_createImage);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
 //
 // This is a cornerstone image loader for web images such as PNG and JPEG
 //
@@ -265,7 +286,7 @@ var options = {
 
 // Loads an image given a url to an image
 function loadImage(imageId) {
-  var deferred = $.Deferred();
+  var deferred = _externalModules.$.Deferred();
 
   var xhr = new XMLHttpRequest();
 
@@ -294,7 +315,7 @@ function loadImage(imageId) {
       var total = oProgress.total;
       var percentComplete = Math.round(loaded / total * 100);
 
-      $(cornerstone.events).trigger('CornerstoneImageLoadProgress', {
+      (0, _externalModules.$)(_externalModules.external.cornerstone.events).trigger('CornerstoneImageLoadProgress', {
         imageId: imageId,
         loaded: loaded,
         total: total,
@@ -319,9 +340,9 @@ function configure(opts) {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
-exports.configure = exports.loadImage = exports.createImage = exports.arrayBufferToImage = undefined;
+exports.external = exports.configure = exports.loadImage = exports.createImage = exports.arrayBufferToImage = undefined;
 
 var _arrayBufferToImage = __webpack_require__(1);
 
@@ -333,11 +354,7 @@ var _createImage2 = _interopRequireDefault(_createImage);
 
 var _loadImage = __webpack_require__(3);
 
-var _cornerstoneCore = __webpack_require__(0);
-
-var cornerstone = _interopRequireWildcard(_cornerstoneCore);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+var _externalModules = __webpack_require__(0);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -345,11 +362,32 @@ exports.arrayBufferToImage = _arrayBufferToImage2.default;
 exports.createImage = _createImage2.default;
 exports.loadImage = _loadImage.loadImage;
 exports.configure = _loadImage.configure;
+exports.external = _externalModules.external;
 
-// Register the http and https prefixes so we can use standard web urls directly
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
 
-cornerstone.registerImageLoader('http', _loadImage.loadImage);
-cornerstone.registerImageLoader('https', _loadImage.loadImage);
+module.exports = __WEBPACK_EXTERNAL_MODULE_5__;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (cornerstone) {
+  // Register the http and https prefixes so we can use standard web urls directly
+  cornerstone.registerImageLoader('http', _loadImage.loadImage);
+  cornerstone.registerImageLoader('https', _loadImage.loadImage);
+};
+
+var _loadImage = __webpack_require__(3);
 
 /***/ })
 /******/ ]);
