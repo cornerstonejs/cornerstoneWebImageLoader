@@ -1,4 +1,4 @@
-import { $, external } from './externalModules.js';
+import { external } from './externalModules.js';
 import arrayBufferToImage from './arrayBufferToImage';
 import createImage from './createImage';
 
@@ -13,7 +13,7 @@ let options = {
 
 // Loads an image given a url to an image
 export function loadImage (imageId) {
-  const deferred = $.Deferred();
+  const deferred = external.$.Deferred();
 
   const xhr = new XMLHttpRequest();
 
@@ -41,7 +41,7 @@ export function loadImage (imageId) {
       const total = oProgress.total;
       const percentComplete = Math.round((loaded / total) * 100);
 
-      $(external.cornerstone.events).trigger('CornerstoneImageLoadProgress', {
+      external.$(external.cornerstone.events).trigger('CornerstoneImageLoadProgress', {
         imageId,
         loaded,
         total,

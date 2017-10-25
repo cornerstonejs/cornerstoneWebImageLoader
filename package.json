@@ -52,6 +52,7 @@
     "eslint": "^4.9.0",
     "eslint-loader": "^1.9.0",
     "istanbul-instrumenter-loader": "^3.0.0",
+    "jquery": "^3.2.1",
     "jsdoc": "^3.5.5",
     "karma": "^1.7.1",
     "karma-chrome-launcher": "^2.2.0",
@@ -66,8 +67,5 @@
     "shx": "^0.2.2",
     "uglify-js": "^3.1.5",
     "webpack": "^3.8.1"
-  },
-  "dependencies": {
-    "jquery": "^2.2.4"
   }
 }
