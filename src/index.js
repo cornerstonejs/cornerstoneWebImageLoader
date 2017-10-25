@@ -1,15 +1,12 @@
 import arrayBufferToImage from './arrayBufferToImage';
 import createImage from './createImage';
 import { loadImage, configure } from './loadImage';
-import * as cornerstone from 'cornerstone-core';
+import { external } from './externalModules.js';
 
 export {
-    arrayBufferToImage,
-    createImage,
-    loadImage,
-    configure
+  arrayBufferToImage,
+  createImage,
+  loadImage,
+  configure,
+  external
 };
-
-// Register the http and https prefixes so we can use standard web urls directly
-cornerstone.registerImageLoader('http', loadImage);
-cornerstone.registerImageLoader('https', loadImage);

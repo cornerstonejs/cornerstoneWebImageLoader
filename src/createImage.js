@@ -1,4 +1,4 @@
-import * as cornerstone from 'cornerstone-core';
+import { external } from './externalModules.js';
 
 const canvas = document.createElement('canvas');
 let lastImageIdDrawn = '';
@@ -74,7 +74,7 @@ export default function (image, imageId) {
     intercept: 0,
     windowCenter: 128,
     windowWidth: 255,
-    render: cornerstone.renderWebImage,
+    render: external.cornerstone.renderWebImage,
     getPixelData,
     getImageData,
     getCanvas,

@@ -25,12 +25,6 @@ module.exports = {
       amd: "jquery",
       root: '$'
     },
-    'cornerstone-core': {
-      commonjs: "cornerstone-core",
-      commonjs2: "cornerstone-core",
-      amd: "cornerstone-core",
-      root: 'cornerstone'
-    },
   },
   module: {
     rules: [{

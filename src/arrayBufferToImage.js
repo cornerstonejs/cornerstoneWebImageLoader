@@ -1,4 +1,3 @@
-
 /**
  * Convert array buffer to image. Returns a promise that resolves to an Image object for the bytes in arrayBuffer
  *
