@@ -1,4 +1,4 @@
-/*! cornerstone-web-image-loader - 0.8.5 - 2017-10-25 | (c) 2016 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */
+/*! cornerstone-web-image-loader - 0.8.6 - 2017-10-26 | (c) 2016 Chris Hafey | https://github.com/chafey/cornerstoneWebImageLoader */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -317,12 +317,18 @@ function loadImage(imageId) {
       var total = oProgress.total;
       var percentComplete = Math.round(loaded / total * 100);
 
-      _externalModules.external.$(_externalModules.external.cornerstone.events).trigger('CornerstoneImageLoadProgress', {
+      var eventData = {
         imageId: imageId,
         loaded: loaded,
         total: total,
         percentComplete: percentComplete
-      });
+      };
+
+      _externalModules.external.$(_externalModules.external.cornerstone.events).trigger('CornerstoneImageLoadProgress', eventData);
+
+      var customEvent = new CustomEvent('cornerstoneimageloadprogress', { detail: eventData });
+
+      _externalModules.external.cornerstone.events.dispatchEvent(customEvent);
     }
   };
   xhr.send();

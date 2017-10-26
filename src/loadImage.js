@@ -41,12 +41,18 @@ export function loadImage (imageId) {
       const total = oProgress.total;
       const percentComplete = Math.round((loaded / total) * 100);
 
-      external.$(external.cornerstone.events).trigger('CornerstoneImageLoadProgress', {
+      const eventData = {
         imageId,
         loaded,
         total,
         percentComplete
-      });
+      };
+
+      external.$(external.cornerstone.events).trigger('CornerstoneImageLoadProgress', eventData);
+
+      const customEvent = new CustomEvent('cornerstoneimageloadprogress', { detail: eventData });
+
+      external.cornerstone.events.dispatchEvent(customEvent);
     }
   };
   xhr.send();
