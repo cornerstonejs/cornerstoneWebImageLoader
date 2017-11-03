@@ -28,7 +28,7 @@ Usage
 Simply include the cornerstoneWebImageLoader.js in your HTML file after you load cornerstone.js and then set the cornerstone instance as an external module for cornerstoneWebImageLoader:
 
 ````javascript
-cornerstoneWebImageLoader.externals.cornerstone = cornerstone;
+cornerstoneWebImageLoader.external.cornerstone = cornerstone;
 ````
 
 This will let cornerstoneWebImageLoader register itself with cornerstone to load imageId's that have the http or https url schemes. To display an image, pass the url to the image as the imageId parameter to a cornerstone API function loadImage().
