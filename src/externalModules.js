@@ -1,7 +1,6 @@
 import registerLoaders from './registerLoaders.js';
 
 let cornerstone;
-let $ = window.$;
 
 const external = {
   set cornerstone (cs) {
@@ -11,12 +10,6 @@ const external = {
   },
   get cornerstone () {
     return cornerstone;
-  },
-  set $ (module) {
-    $ = module;
-  },
-  get $ () {
-    return $;
   }
 };
 
