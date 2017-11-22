@@ -1,6 +1,6 @@
 import { external } from './externalModules.js';
-import arrayBufferToImage from './arrayBufferToImage';
-import createImage from './createImage';
+import arrayBufferToImage from './arrayBufferToImage.js';
+import createImage from './createImage.js';
 
 //
 // This is a cornerstone image loader for web images such as PNG and JPEG

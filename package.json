@@ -2,14 +2,20 @@
   "name": "cornerstone-web-image-loader",
   "version": "1.0.0",
   "description": "Cornerstone ImageLoader for Web Images (PNG, JPG)",
-  "keywords": ["medical", "imaging", "JPEG", "PNG", "cornerstone"],
+  "keywords": [
+    "medical",
+    "imaging",
+    "JPEG",
+    "PNG",
+    "cornerstone"
+  ],
   "author": "Chris Hafey",
   "homepage": "https://github.com/chafey/cornerstoneWebImageLoader",
   "license": "MIT",
   "main": "./dist/cornerstoneWebImageLoader.min.js",
   "repository": {
-      "type": "git",
-      "url": "https://github.com/chafey/cornerstoneWebImageLoader.git"
+    "type": "git",
+    "url": "https://github.com/chafey/cornerstoneWebImageLoader.git"
   },
   "scripts": {
     "eslint": "eslint -c .eslintrc.js src",
@@ -51,6 +57,7 @@
     "docdash": "^0.4.0",
     "eslint": "^4.9.0",
     "eslint-loader": "^1.9.0",
+    "eslint-plugin-import": "^2.8.0",
     "istanbul-instrumenter-loader": "^3.0.0",
     "jquery": "^3.2.1",
     "jsdoc": "^3.5.5",

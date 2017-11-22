@@ -1,6 +1,6 @@
-import arrayBufferToImage from './arrayBufferToImage';
-import createImage from './createImage';
-import { loadImage, configure } from './loadImage';
+import arrayBufferToImage from './arrayBufferToImage.js';
+import createImage from './createImage.js';
+import { loadImage, configure } from './loadImage.js';
 import { external } from './externalModules.js';
 
 export {
