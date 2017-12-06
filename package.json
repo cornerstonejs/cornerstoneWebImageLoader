@@ -10,12 +10,12 @@
     "cornerstone"
   ],
   "author": "Chris Hafey",
-  "homepage": "https://github.com/chafey/cornerstoneWebImageLoader",
+  "homepage": "https://github.com/cornerstonejs/cornerstoneWebImageLoader",
   "license": "MIT",
   "main": "./dist/cornerstoneWebImageLoader.min.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/chafey/cornerstoneWebImageLoader.git"
+    "url": "https://github.com/cornerstonejs/cornerstoneWebImageLoader.git"
   },
   "scripts": {
     "eslint": "eslint -c .eslintrc.js src",
@@ -33,16 +33,14 @@
     "webpack:dev": "webpack --progress --config ./config/webpack/webpack-dev",
     "webpack:prod": "webpack --progress --config ./config/webpack/webpack-prod",
     "webpack:watch": "webpack --progress --debug --watch  --config ./config/webpack",
-    "watch": "npm run clean && shx mkdir dist && npm run concat:codecs && npm run webpack:watch",
+    "watch": "npm run clean && shx mkdir dist npm run webpack:watch",
     "start": "npm run webpack",
     "test": "npm run test:phantom",
     "test:watch": "karma start config/karma/karma-watch.js",
     "test:phantom": "karma start config/karma/karma-phantom.js",
     "test:chrome": "karma start config/karma/karma-chrome.js",
     "test:firefox": "karma start config/karma/karma-firefox.js",
-    "test:all": "npm run test:phantom && npm run test:chrome && npm run test:firefox",
-    "concat:codecs": "concat -o ./dist/cornerstoneWADOImageLoaderCodecs.js ./codecs/charLS-FixedMemory-browser.js ./codecs/jpeg.js ./codecs/jpegLossless.js ./codecs/jpx.min.js ./codecs/openJPEG-FixedMemory.js ./codecs/pako.min.js",
-    "uglify:codecs": "uglifyjs --comments /^/\\*!/ --stats -o ./dist/cornerstoneWADOImageLoaderCodecs.min.js -- ./dist/cornerstoneWADOImageLoaderCodecs.js"
+    "test:all": "npm run test:phantom && npm run test:chrome && npm run test:firefox"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

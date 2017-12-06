@@ -1,12 +1,12 @@
 cornerstone Web Image Loader
 =============================
 
-A [cornerstone](https://github.com/chafey/cornerstone) Image Loader for web images (PNG, JPEG).
+A [cornerstone](https://github.com/cornerstonejs/cornerstone) Image Loader for web images (PNG, JPEG).
 
 Live Examples
 ---------------
 
-[Click here for a live example of this library in use!](http://rawgit.com/chafey/cornerstoneWebImageLoader/master/examples/index.html)
+[Click here for a live example of this library in use!](http://rawgit.com/cornerstonejs/cornerstoneWebImageLoader/master/examples/index.html)
 
 View the [simple image viewer](http://viewer.ohif.org/) built on cornerstone.
 
@@ -15,8 +15,8 @@ Install
 
 Get a packaged source file:
 
-* [cornerstoneWebImageLoader.js](https://raw.githubusercontent.com/chafey/cornerstoneWebImageLoader/master/dist/cornerstoneWebImageLoader.js)
-* [cornerstoneWebImageLoader.min.js](https://raw.githubusercontent.com/chafey/cornerstoneWebImageLoader/master/dist/cornerstoneWebImageLoader.min.js)
+* [cornerstoneWebImageLoader.js](https://raw.githubusercontent.com/cornerstonejs/cornerstoneWebImageLoader/master/dist/cornerstoneWebImageLoader.js)
+* [cornerstoneWebImageLoader.min.js](https://raw.githubusercontent.com/cornerstonejs/cornerstoneWebImageLoader/master/dist/cornerstoneWebImageLoader.min.js)
 
 Or install via [NPM](https://www.npmjs.com/):
 
@@ -38,7 +38,7 @@ Key Features
 
 * Provides a bridge between the cornerstone library and standard web images
 * Allows XHR to be hooked so custom http headers can be added (e.g. for authentication).  View the source of the
-  [example](http://rawgit.com/chafey/cornerstoneWebImageLoader/master/examples/index.html) to see how this is done.
+  [example](http://rawgit.com/cornerstonejs/cornerstoneWebImageLoader/master/examples/index.html) to see how this is done.
 
 Contributors
 ------------
