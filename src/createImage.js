@@ -1,7 +1,7 @@
 import { external } from './externalModules.js';
 
 const canvas = document.createElement('canvas');
-let lastImageIdDrawn = '';
+let lastImageIdDrawn;
 
 /**
  * creates a cornerstone Image object for the specified Image and imageId
@@ -17,21 +17,9 @@ export default function (image, imageId) {
 
   function getPixelData () {
     const imageData = getImageData();
-    const imageDataData = imageData.data;
-    const numPixels = image.naturalHeight * image.naturalWidth;
-    const storedPixelData = new Uint8Array(numPixels * 4);
-    let imageDataIndex = 0;
-    let storedPixelDataIndex = 0;
 
-    for (let i = 0; i < numPixels; i++) {
-      storedPixelData[storedPixelDataIndex++] = imageDataData[imageDataIndex++];
-      storedPixelData[storedPixelDataIndex++] = imageDataData[imageDataIndex++];
-      storedPixelData[storedPixelDataIndex++] = imageDataData[imageDataIndex++];
-      storedPixelData[storedPixelDataIndex++] = 255; // alpha
-      imageDataIndex++;
-    }
 
-    return storedPixelData;
+    return imageData.data;
   }
 
   function getImageData () {
@@ -70,13 +58,12 @@ export default function (image, imageId) {
     imageId,
     minPixelValue: 0,
     maxPixelValue: 255,
-    slope: 1.0,
+    slope: 1,
     intercept: 0,
     windowCenter: 128,
     windowWidth: 255,
     render: external.cornerstone.renderWebImage,
     getPixelData,
-    getImageData,
     getCanvas,
     getImage: () => image,
     rows,
@@ -84,9 +71,10 @@ export default function (image, imageId) {
     height: rows,
     width: columns,
     color: true,
+    rgba: false,
     columnPixelSpacing: undefined,
     rowPixelSpacing: undefined,
     invert: false,
-    sizeInBytes: rows * columns * 4 // we don't know for sure so we over estimate to be safe
+    sizeInBytes: rows * columns * 4
   };
 }

@@ -1,4 +1,4 @@
-/*! cornerstone-web-image-loader - 1.0.0 - 2017-12-06 | (c) 2016 Chris Hafey | https://github.com/cornerstonejs/cornerstoneWebImageLoader */
+/*! cornerstone-web-image-loader - 1.0.0 - 2017-12-08 | (c) 2016 Chris Hafey | https://github.com/cornerstonejs/cornerstoneWebImageLoader */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -93,7 +93,6 @@ var _registerLoaders2 = _interopRequireDefault(_registerLoaders);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var cornerstone = void 0;
-var $ = window.$;
 
 var external = {
   set cornerstone(cs) {
@@ -103,12 +102,6 @@ var external = {
   },
   get cornerstone() {
     return cornerstone;
-  },
-  set $(module) {
-    $ = module;
-  },
-  get $() {
-    return $;
   }
 };
 
@@ -164,21 +157,8 @@ exports.default = function (image, imageId) {
 
   function getPixelData() {
     var imageData = getImageData();
-    var imageDataData = imageData.data;
-    var numPixels = image.naturalHeight * image.naturalWidth;
-    var storedPixelData = new Uint8Array(numPixels * 4);
-    var imageDataIndex = 0;
-    var storedPixelDataIndex = 0;
 
-    for (var i = 0; i < numPixels; i++) {
-      storedPixelData[storedPixelDataIndex++] = imageDataData[imageDataIndex++];
-      storedPixelData[storedPixelDataIndex++] = imageDataData[imageDataIndex++];
-      storedPixelData[storedPixelDataIndex++] = imageDataData[imageDataIndex++];
-      storedPixelData[storedPixelDataIndex++] = 255; // alpha
-      imageDataIndex++;
-    }
-
-    return storedPixelData;
+    return imageData.data;
   }
 
   function getImageData() {
@@ -217,13 +197,12 @@ exports.default = function (image, imageId) {
     imageId: imageId,
     minPixelValue: 0,
     maxPixelValue: 255,
-    slope: 1.0,
+    slope: 1,
     intercept: 0,
     windowCenter: 128,
     windowWidth: 255,
     render: _externalModules.external.cornerstone.renderWebImage,
     getPixelData: getPixelData,
-    getImageData: getImageData,
     getCanvas: getCanvas,
     getImage: function getImage() {
       return image;
@@ -233,17 +212,18 @@ exports.default = function (image, imageId) {
     height: rows,
     width: columns,
     color: true,
+    rgba: false,
     columnPixelSpacing: undefined,
     rowPixelSpacing: undefined,
     invert: false,
-    sizeInBytes: rows * columns * 4 // we don't know for sure so we over estimate to be safe
+    sizeInBytes: rows * columns * 4
   };
 };
 
 var _externalModules = __webpack_require__(0);
 
 var canvas = document.createElement('canvas');
-var lastImageIdDrawn = '';
+var lastImageIdDrawn = void 0;
 
 /**
  * creates a cornerstone Image object for the specified Image and imageId
@@ -288,7 +268,7 @@ var options = {
 
 // Loads an image given a url to an image
 function loadImage(imageId) {
-  var deferred = _externalModules.external.$.Deferred();
+  var cornerstone = _externalModules.external.cornerstone;
 
   var xhr = new XMLHttpRequest();
 
@@ -296,23 +276,10 @@ function loadImage(imageId) {
   xhr.responseType = 'arraybuffer';
   options.beforeSend(xhr);
 
-  xhr.onload = function () {
-    var imagePromise = (0, _arrayBufferToImage2.default)(this.response);
-
-    imagePromise.then(function (image) {
-      var imageObject = (0, _createImage2.default)(image, imageId);
-
-      deferred.resolve(imageObject);
-    }, function (error) {
-      deferred.reject(error);
-    });
-  };
   xhr.onprogress = function (oProgress) {
-
     if (oProgress.lengthComputable) {
       // evt.loaded the bytes browser receive
-      // evt.total the total bytes seted by the header
-      //
+      // evt.total the total bytes set by the header
       var loaded = oProgress.loaded;
       var total = oProgress.total;
       var percentComplete = Math.round(loaded / total * 100);
@@ -324,16 +291,32 @@ function loadImage(imageId) {
         percentComplete: percentComplete
       };
 
-      _externalModules.external.$(_externalModules.external.cornerstone.events).trigger('CornerstoneImageLoadProgress', eventData);
-
-      var customEvent = new CustomEvent('cornerstoneimageloadprogress', { detail: eventData });
-
-      _externalModules.external.cornerstone.events.dispatchEvent(customEvent);
+      cornerstone.triggerEvent(cornerstone.events, 'cornerstoneimageloadprogress', eventData);
     }
   };
-  xhr.send();
 
-  return deferred;
+  var promise = new Promise(function (resolve, reject) {
+    xhr.onload = function () {
+      var imagePromise = (0, _arrayBufferToImage2.default)(this.response);
+
+      imagePromise.then(function (image) {
+        var imageObject = (0, _createImage2.default)(image, imageId);
+
+        resolve(imageObject);
+      }, reject);
+    };
+
+    xhr.send();
+  });
+
+  var cancelFn = function cancelFn() {
+    xhr.abort();
+  };
+
+  return {
+    promise: promise,
+    cancelFn: cancelFn
+  };
 }
 
 function configure(opts) {

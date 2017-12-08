@@ -13,7 +13,7 @@ let options = {
 
 // Loads an image given a url to an image
 export function loadImage (imageId) {
-  const deferred = external.$.Deferred();
+  const cornerstone = external.cornerstone;
 
   const xhr = new XMLHttpRequest();
 
@@ -21,22 +21,10 @@ export function loadImage (imageId) {
   xhr.responseType = 'arraybuffer';
   options.beforeSend(xhr);
 
-  xhr.onload = function () {
-    const imagePromise = arrayBufferToImage(this.response);
-
-    imagePromise.then(function (image) {
-      const imageObject = createImage(image, imageId);
-
-      deferred.resolve(imageObject);
-    }, function (error) {
-      deferred.reject(error);
-    });
-  };
   xhr.onprogress = function (oProgress) {
-
-    if (oProgress.lengthComputable) { // evt.loaded the bytes browser receive
-      // evt.total the total bytes seted by the header
-      //
+    if (oProgress.lengthComputable) {
+      // evt.loaded the bytes browser receive
+      // evt.total the total bytes set by the header
       const loaded = oProgress.loaded;
       const total = oProgress.total;
       const percentComplete = Math.round((loaded / total) * 100);
@@ -48,16 +36,32 @@ export function loadImage (imageId) {
         percentComplete
       };
 
-      external.$(external.cornerstone.events).trigger('CornerstoneImageLoadProgress', eventData);
-
-      const customEvent = new CustomEvent('cornerstoneimageloadprogress', { detail: eventData });
-
-      external.cornerstone.events.dispatchEvent(customEvent);
+      cornerstone.triggerEvent(cornerstone.events, 'cornerstoneimageloadprogress', eventData);
     }
   };
-  xhr.send();
 
-  return deferred;
+  const promise = new Promise((resolve, reject) => {
+    xhr.onload = function () {
+      const imagePromise = arrayBufferToImage(this.response);
+
+      imagePromise.then((image) => {
+        const imageObject = createImage(image, imageId);
+
+        resolve(imageObject);
+      }, reject);
+    };
+
+    xhr.send();
+  });
+
+  const cancelFn = () => {
+    xhr.abort();
+  };
+
+  return {
+    promise,
+    cancelFn
+  };
 }
 
 export function configure (opts) {
