@@ -2,7 +2,6 @@
 <html>
 <head>
     <!-- twitter bootstrap CSS stylesheet - included to make things pretty, not needed or used by cornerstone -->
-    <SCRIPT src="jquery.min.js"></SCRIPT>
     <SCRIPT src="cornerstone.min.js"></SCRIPT>
     <SCRIPT src="cornerstoneMath.min.js"></SCRIPT>
     <SCRIPT src="cornerstoneTools.min.js"></SCRIPT>
@@ -74,12 +73,11 @@
        }
     });
 
-    $('#downloadAndView').click(function(e) {
-
-        var url = $('#wadoURL').val();
+    document.getElementById('downloadAndView').addEventListener('click', function(e) {
+        const url = document.getElementById('wadoURL').value;
 
         // image enable the dicomImage element and activate a few tools
-        var element = $('#dicomImage').get(0);
+        const element = document.getElementById('dicomImage');
         cornerstone.enable(element);
         cornerstone.loadImage(url).then(function(image) {
             cornerstone.displayImage(element, image);

@@ -1,4 +1,4 @@
-/*! cornerstone-web-image-loader - 2.0.0 - 2017-12-08 | (c) 2016 Chris Hafey | https://github.com/cornerstonejs/cornerstoneWebImageLoader */
+/*! cornerstone-web-image-loader - 2.0.0 - 2017-12-15 | (c) 2016 Chris Hafey | https://github.com/cornerstonejs/cornerstoneWebImageLoader */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
