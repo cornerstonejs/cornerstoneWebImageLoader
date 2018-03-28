@@ -1,4 +1,11 @@
-node_modules
-bower_components
+## Directorties
+coverage/
+dist/
+documentation/
+node_modules/
+
+## Files
 .idea
-build
+.DS_Store
+npm-debug.log
+package-lock.json
