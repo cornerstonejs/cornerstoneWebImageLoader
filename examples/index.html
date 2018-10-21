@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
     <!-- twitter bootstrap CSS stylesheet - included to make things pretty, not needed or used by cornerstone -->
     <SCRIPT src="cornerstone.min.js"></SCRIPT>
@@ -10,77 +11,85 @@
     <script src="../dist/cornerstoneWebImageLoader.js"></script>
     <script>window.cornerstoneWebImageLoader || document.write('<script src="https://unpkg.com/cornerstone-web-image-loader">\x3C/script>')</script>
 </head>
+
 <body>
-<div class="container">
+    <div class="container">
 
-    <div class="page-header">
-        <h1>Example of displaying a web image (JPEG, PNG) using Cornerstone</h1>
-        <p class="lead">
-            Enter a URL for a JPEG or PNG image below to view it using cornerstone
-        </p>
-        <p>
-            This example illustrates how to use the cornerstoneWebImageLoader to get a standard web
-            image (JPEG, PNG)  and display it using cornerstone.
-        </p>
-        <strong>If you get an HTTP error and your URL is correct, it is probably because the server is not configured to
-            allow <a href="http://en.wikipedia.org/wiki/Cross-origin_resource_sharing">Cross Origin Requests</a>.
-            Most browsers will allow you to enable cross domain requests via settings or command line switches,
-            you can start chrome with the command line switch <code>--disable-web-security</code> to allow cross origin requests.
-            See the <a href="http://enable-cors.org/">Enable CORS site</a> for information about CORS.
-        </strong>
-        <br>
-        <br>
-        <strong>Use of this example require IE10+ or any other modern browser.</strong>
+        <div class="page-header">
+            <h1>Example of displaying a web image (JPEG, PNG) using Cornerstone</h1>
+            <p class="lead">
+                Enter a URL for a JPEG or PNG image below to view it using cornerstone
+            </p>
+            <p>
+                This example illustrates how to use the cornerstoneWebImageLoader to get a standard web
+                image (JPEG, PNG) and display it using cornerstone.
+            </p>
+            <strong>If you get an HTTP error and your URL is correct, it is probably because the server is not
+                configured to
+                allow <a href="http://en.wikipedia.org/wiki/Cross-origin_resource_sharing">Cross Origin Requests</a>.
+                Most browsers will allow you to enable cross domain requests via settings or command line switches,
+                you can start chrome with the command line switch <code>--disable-web-security</code> to allow cross
+                origin requests.
+                See the <a href="http://enable-cors.org/">Enable CORS site</a> for information about CORS.
+            </strong>
+            <br>
+            <br>
+            <strong>Use of this example require IE10+ or any other modern browser.</strong>
 
 
-    </div>
+        </div>
 
-    <div class="row">
-        <form class="form-horizontal">
-            <div class="form-group">
-                <label class="control-label col-sm-1" for="wadoURL">URL</label>
-                <div class="col-sm-8">
-                    <input class="form-control" type="text" id="wadoURL" placeholder="Enter URL" value="https://rawgit.com/cornerstonejs/cornerstoneWebImageLoader/master/examples/Renal_Cell_Carcinoma.jpg">
+        <div class="row">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-sm-1" for="wadoURL">URL</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" type="text" id="wadoURL" placeholder="Enter URL" value="https://rawgit.com/cornerstonejs/cornerstoneWebImageLoader/master/examples/Renal_Cell_Carcinoma.jpg">
+                    </div>
+                    <div class="col-sm-3">
+                        <button class="form-control" type="button" id="downloadAndView" class="btn btn-primary">Download
+                            and View</button>
+                    </div>
                 </div>
-                <div class="col-sm-3">
-                    <button class="form-control" type="button" id="downloadAndView" class="btn btn-primary">Download and View</button>
+                <div class="form-group">
+
+                    <div class="col-sm-3 pull-right">
+
+                        <button class="form-control" type="button" id="cancelRequest" class="btn btn-primary">Cancel
+                            Request</button>
+                    </div>
                 </div>
+            </form>
+        </div>
+
+        <div style="width:512px;height:512px;position:relative;color: white;display:inline-block;border-style:solid;border-color:black;"
+            oncontextmenu="return false" class='disable-selection noIbar' unselectable='on' onselectstart='return false;'
+            onmousedown='return false;'>
+            <div id="dicomImage" style="width:512px;height:512px;top:0px;left:0px; position:absolute">
             </div>
-        </form>
-    </div>
-
-    <div style="width:512px;height:512px;position:relative;color: white;display:inline-block;border-style:solid;border-color:black;"
-         oncontextmenu="return false"
-         class='disable-selection noIbar'
-         unselectable='on'
-         onselectstart='return false;'
-         onmousedown='return false;'>
-        <div id="dicomImage"
-             style="width:512px;height:512px;top:0px;left:0px; position:absolute">
         </div>
     </div>
-</div>
 </body>
 
 
 
 <script>
     cornerstoneWebImageLoader.external.cornerstone = cornerstone;
-    
+
     cornerstoneWebImageLoader.configure({
-       beforeSend: function(xhr) {
-           // Add custom headers here (e.g. auth tokens)
-           //xhr.setRequestHeader('x-auth-token', 'my auth token');
-       }
+        beforeSend: function (xhr) {
+            // Add custom headers here (e.g. auth tokens)
+            //xhr.setRequestHeader('x-auth-token', 'my auth token');
+        }
     });
 
-    document.getElementById('downloadAndView').addEventListener('click', function(e) {
+    document.getElementById('downloadAndView').addEventListener('click', function (e) {
         const url = document.getElementById('wadoURL').value;
 
         // image enable the dicomImage element and activate a few tools
         const element = document.getElementById('dicomImage');
         cornerstone.enable(element);
-        cornerstone.loadImage(url).then(function(image) {
+        cornerstone.loadAndCacheImage(url).then(function (image) {
             cornerstone.displayImage(element, image);
             cornerstoneTools.mouseInput.enable(element);
             cornerstoneTools.mouseWheelInput.enable(element);
@@ -90,5 +99,14 @@
             cornerstoneTools.zoomWheel.activate(element); // zoom is the default tool for middle mouse wheel
         });
     });
+    document.getElementById('cancelRequest').addEventListener('click', function (e) {
+        const url = document.getElementById('wadoURL').value;
+        imgLoadObj = cornerstone.imageCache.getImageLoadObject(url);
+        if (imgLoadObj && imgLoadObj.cancelFn) {
+            imgLoadObj.cancelFn();
+        }
+    });
+
 </script>
+
 </html>
