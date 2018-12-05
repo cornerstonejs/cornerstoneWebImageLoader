@@ -1,6 +1,6 @@
 {
   "name": "cornerstone-web-image-loader",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Cornerstone ImageLoader for Web Images (PNG, JPG)",
   "keywords": [
     "medical",
@@ -13,6 +13,7 @@
   "homepage": "https://github.com/cornerstonejs/cornerstoneWebImageLoader",
   "license": "MIT",
   "main": "./dist/cornerstoneWebImageLoader.min.js",
+  "module": "./dist/cornerstoneWebImageLoader.min.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/cornerstonejs/cornerstoneWebImageLoader.git"
