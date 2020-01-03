@@ -15,10 +15,11 @@ Install
 
 Get a packaged source file:
 
-* [cornerstoneWebImageLoader.js](https://raw.githubusercontent.com/cornerstonejs/cornerstoneWebImageLoader/master/dist/cornerstoneWebImageLoader.js)
-* [cornerstoneWebImageLoader.min.js](https://raw.githubusercontent.com/cornerstonejs/cornerstoneWebImageLoader/master/dist/cornerstoneWebImageLoader.min.js)
+* [cornerstoneWebImageLoader.js](https://unpkg.com/browse/cornerstone-web-image-loader/dist/)
+* [cornerstoneWebImageLoader.min.js](https://unpkg.com/browse/cornerstone-web-image-loader/dist/)
 
-Or install via [NPM](https://www.npmjs.com/):
+
+Or install via [NPM](https://www.npmjs.com/package/cornerstone-web-image-loader):
 
 > npm install cornerstone-web-image-loader
 
