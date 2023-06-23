@@ -1,7 +1,7 @@
 cornerstone Web Image Loader
 =============================
 
-A [cornerstone](https://github.com/cornerstonejs/cornerstone) Image Loader for web images (PNG, JPEG).
+A [cornerstone](https://github.com/cornerstonejs/cornerstone) Image Loader for web images (PNG, JPEG) for cornerstone legacy. For cornerstone3D use the new loader [here](https://github.com/cornerstonejs/cornerstone3D-beta/blob/main/packages/core/examples/webLoader/registerWebImageLoader.ts) 
 
 Live Examples
 ---------------
