@@ -7,7 +7,7 @@ import createImage from './createImage.js';
 //
 let options = {
   // callback allowing customization of the xhr (e.g. adding custom auth headers, cors, etc)
-  beforeSend (/* xhr */) {}
+  beforeSend (/* xhr */) { }
 };
 
 
@@ -51,11 +51,15 @@ export function loadImage (imageId) {
       }, reject);
     };
 
+    xhr.onabort = reject;
+
     xhr.send();
   });
 
   const cancelFn = () => {
-    xhr.abort();
+    if (xhr.readyState < 4) {
+      xhr.abort();
+    }
   };
 
   return {
